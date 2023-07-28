@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using static RTS.Store.Common.EntityValidationConstants.Product;
 
     public class Product
@@ -38,9 +39,10 @@
 
         public Seller Seller { get; set; } = null!;
 
-        public Guid? BuyerId { get; set; }
+        public string? BuyerId { get; set; }
 
-        public AplicationUser? Buyer { get; set; }
+        [ForeignKey("BuyerId")]
+        public ApplicationUser? Buyer { get; set; }
 
         public Guid? ShopingCardId { get; set; }
 

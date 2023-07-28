@@ -1,4 +1,4 @@
-﻿namespace RTS.Stor.Web.Controllers
+﻿namespace RTS.Store.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
     using RTS.Stor.Web.Models;

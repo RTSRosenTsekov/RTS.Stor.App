@@ -1,4 +1,4 @@
-﻿namespace RTS.Stor.Web.Data.Migrations
+﻿namespace RTS.Store.Web.Data.Migrations
 {
     using Microsoft.EntityFrameworkCore.Metadata;
     using Microsoft.EntityFrameworkCore.Migrations;

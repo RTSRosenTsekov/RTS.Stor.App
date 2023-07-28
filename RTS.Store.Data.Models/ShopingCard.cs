@@ -17,12 +17,12 @@
 
         public virtual ICollection<Product> Products { get; set; }=new HashSet<Product>();
 
-        public Guid UserId { get; set; }
+        public string? UserId { get; set; }
 
-        public AplicationUser User { get; set; } = null!;
+        public ApplicationUser? User { get; set; } = null!;
 
-        public int PaymentId { get; set; }
+        public Guid? PaymentId { get; set; }
 
-        public Payment Payment { get; set; } = null!;
+        public virtual Payment? Payment { get; set; } = null!;
     }
 }

@@ -1,8 +1,9 @@
-namespace RTS.Stor.Web
+namespace RTS.Store.Web
 {
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
-    using RTS.Stor.Web.Data;
+    using RTS.Store.Web.Data;
+    using RTS.Store.Data.Models;
 
     public class Program
     {
@@ -12,12 +13,28 @@ namespace RTS.Stor.Web
 
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
             builder.Services.AddDbContext<StoreDbContext>(options =>
                 options.UseSqlServer(connectionString));
+
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<StoreDbContext>();
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
+            {
+               
+                options.SignIn.RequireConfirmedAccount = false;
+                options.SignIn.RequireConfirmedPhoneNumber = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 0;
+                options.Password.RequireDigit = false;
+                options.Password.RequiredUniqueChars = 0;
+
+
+            })
+              .AddEntityFrameworkStores<StoreDbContext>();
+
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
@@ -26,6 +43,7 @@ namespace RTS.Stor.Web
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
+                app.UseDeveloperExceptionPage();
             }
             else
             {

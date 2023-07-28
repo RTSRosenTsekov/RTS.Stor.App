@@ -3,12 +3,13 @@
     using Microsoft.AspNetCore.Identity;
     using System.ComponentModel.DataAnnotations;
 
-    public class AplicationUser : IdentityUser<Guid>
+    public class ApplicationUser : IdentityUser
     {
-        public AplicationUser()
+        public ApplicationUser()
         {
-            this.Id = Guid.NewGuid();
+           // this.Id = Guid.NewGuid();
             this.ShopingCards = new HashSet<ShopingCard>();
+            this.BuyProduct = new HashSet<Product>();
         }
 
         [Required]
@@ -23,9 +24,11 @@
 
         [MaxLength(50)]
         [MinLength(10)]
-        public string Address { get; set; } = null!;
+        public string? Address { get; set; }
 
         public virtual ICollection<ShopingCard> ShopingCards { get; set; }
+
+        public  ICollection<Product> BuyProduct { get; set; }
 
     }
 }

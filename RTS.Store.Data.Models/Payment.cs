@@ -4,7 +4,7 @@
 
     public class Payment
     {
-        // Данни за плащането 
+        
 
         [Key]
         public Guid Id { get; set; }
