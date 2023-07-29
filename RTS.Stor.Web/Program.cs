@@ -5,6 +5,8 @@ namespace RTS.Store.Web
     using RTS.Store.Data.Models;
     using RTS.Store.Web.Infrastricture.ModelBinders;
     using Microsoft.AspNetCore.Mvc;
+    using RTS.Store.Web.Infrastricture.Extensions;
+    using RTS.Store.Services.Data.Interfaces;
 
     public class Program
     {
@@ -35,6 +37,8 @@ namespace RTS.Store.Web
 
             })
               .AddEntityFrameworkStores<StoreDbContext>();
+
+            builder.Services.AddApplicationServices(typeof(IProductService));
 
             builder.Services
                 .AddControllersWithViews()

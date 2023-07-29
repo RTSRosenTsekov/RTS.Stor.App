@@ -1,7 +1,7 @@
 ﻿namespace RTS.Store.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    using RTS.Stor.Web.Models;
+    using RTS.Store.Web.Models;
     using System.Diagnostics;
 
     public class HomeController : Controller

@@ -1,4 +1,4 @@
-namespace RTS.Stor.Web.Models
+namespace RTS.Store.Web.Models
 {
     public class ErrorViewModel
     {
