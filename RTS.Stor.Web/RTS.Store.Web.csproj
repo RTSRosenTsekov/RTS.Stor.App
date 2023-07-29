@@ -23,6 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\RTS.Store.Data.Models\RTS.Store.Data.Models.csproj" />
     <ProjectReference Include="..\RTS.Store.Data\RTS.Store.Data.csproj" />
+    <ProjectReference Include="..\RTS.Store.Web.Infrastricture\RTS.Store.Web.Infrastricture.csproj" />
   </ItemGroup>
 
 </Project>

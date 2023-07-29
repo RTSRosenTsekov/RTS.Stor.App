@@ -1,9 +1,10 @@
 namespace RTS.Store.Web
 {
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using RTS.Store.Web.Data;
     using RTS.Store.Data.Models;
+    using RTS.Store.Web.Infrastricture.ModelBinders;
+    using Microsoft.AspNetCore.Mvc;
 
     public class Program
     {
@@ -35,7 +36,13 @@ namespace RTS.Store.Web
             })
               .AddEntityFrameworkStores<StoreDbContext>();
 
-            builder.Services.AddControllersWithViews();
+            builder.Services
+                .AddControllersWithViews()
+                .AddMvcOptions(options=>
+                {
+                    options.ModelBinderProviders.Insert(0,new DecimalModelBinderProvider());
+                    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+                });
 
             var app = builder.Build();
 
