@@ -1,0 +1,14 @@
+﻿@model AddProductViewModel
+@{
+    TempData["Title"] = "Add Product";
+}
+
+<h2>@TempData["Title"]</h2>
+<hr />
+
+<partial name="_AddProductPartial" model="@Model"/>
+
+@section Scripts
+    {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,8 +1,10 @@
 ﻿namespace RTS.Store.Services.Data
 {
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
     using RTS.Store.Data.Models;
     using RTS.Store.Services.Data.Interfaces;
+    using RTS.Store.Web.Data;
     using RTS.Store.Web.ViewModel.User;
     using System.Threading.Tasks;
 
@@ -10,12 +12,16 @@
     {
         private readonly UserManager<ApplicationUser> userManeger;
         private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly StoreDbContext  dbContext;
 
-        public UserService(UserManager<ApplicationUser> userManeger , SignInManager<ApplicationUser> signInManager)
+        public UserService(UserManager<ApplicationUser> userManeger , SignInManager<ApplicationUser> signInManager, StoreDbContext dbContext)
         {
             this.userManeger = userManeger;
             this.signInManager = signInManager;
+            this.dbContext = dbContext;
         }
+
+        
 
         public async Task<bool> LoginUserAsync(LoginViewModel model)
         {

@@ -246,15 +246,15 @@ namespace RTS.Store.Web.Data.Migrations
                         {
                             Id = "ddcb42c8-a394-45cd-82ae-b1e71d5c693e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c70c8a8b-1ad2-43fa-852a-e9b58a96a7ff",
+                            ConcurrencyStamp = "df0df705-a18d-49b5-8138-dc455f5efebb",
                             Email = "rosenSeller@abv.bg",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ROSENSELLER@ABV.BG",
                             NormalizedUserName = "ROSENSELLER@ABV.BG",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPQ+lAD/+bTbJF6G4vBlcaio6w8a92wBOGFj6VYU5hn8xkXLBqGdYevkppjrohsZhA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBguR4wikd39lPPgjmKzfjEMBl1jbyBM3CQJMip3Uywv/5WY8MSucTgr26LOMag0Rg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "68ca469a-73a8-4858-852d-3f61123dea65",
+                            SecurityStamp = "540c07e2-8148-46da-a844-45089488663e",
                             TwoFactorEnabled = false,
                             UserName = "rosenSeller@abv.bg"
                         },
@@ -262,15 +262,15 @@ namespace RTS.Store.Web.Data.Migrations
                         {
                             Id = "3c11c7aa-d85a-462a-931e-adcc203d21f4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "dfd4378e-9261-4ee1-959a-b817735a7cbf",
+                            ConcurrencyStamp = "7205025f-2646-40a9-a11a-851ee9ff00c2",
                             Email = "yavorSeller@abv.bg",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "YAVORSELLER@ABV.BG",
                             NormalizedUserName = "YAVORSELLER@ABV.BG",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJa82KpzJAZiOtMC5GXw5IlyaZzEwwTDS/XxaO8CHylXBQ7ust63ZtO2x/DTkS1BUA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEC/OBYyaBnBNvWziIuKDnE/HhZAB/DOGC6j8ZQmAv/PkcypjMYYIFv/03Gt+M81wPg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "be8332a4-ec41-4eeb-afd1-d39df55ca05b",
+                            SecurityStamp = "1fbae9e0-944e-4e1f-90b7-1301ef60d5e5",
                             TwoFactorEnabled = false,
                             UserName = "yavorSeller@abv.bg"
                         });
@@ -405,8 +405,8 @@ namespace RTS.Store.Web.Data.Migrations
                             Id = new Guid("570c58a9-7d93-4b1b-a1e9-a778f94d9d06"),
                             CategoryId = 1,
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "BMW 530d e39, 193к.с Година: 2002 , Цвят:Синя , Екстри:Подгрев на предните седалки , Мултиволан, Темпомат, ",
-                            ImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqi0u80NkjoORAddgNXSmZM-2qx_vlwnaJbg&usqp=CAU",
+                            Description = "BMW 530d e39, 193к.с Година: 2002 , Цвят:Синя , Екстри:Подгрев на /редните/ седалки , Мултиволан, Темпомат, ",
+                            ImageUrl = "https://encrypted-tbn0.gstatic.com/images?//=tbn:ANd9GcTqi0u80NkjoORAddgNXSmZM-2qx_vlwnaJbg&usqp=CAU",
                             IsActive = true,
                             Name = "BMW 530D",
                             Price = 10000.00m,
@@ -419,12 +419,12 @@ namespace RTS.Store.Web.Data.Migrations
                             CategoryId = 2,
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Прасето е от породата Landrace и е 150 кг.Цена за килограм е 10 лв..",
-                            ImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQIRWQanNZMfTV3IsSgZpNuq6VulEr0cP1iQ&usqp=CAU",
+                            ImageUrl = "https://encrypted-tbn0.gstatic.com/images?//=tbn:ANd9GcTQIRWQanNZMfTV3IsSgZpNuq6VulEr0cP1iQ&usqp=CAU",
                             IsActive = true,
                             Name = "Прасе",
                             Price = 1500.00m,
                             QuantityInStock = 5m,
-                            SellerId = new Guid("3c11c7aa-d85a-462a-931e-adcc203d21f4")
+                            SellerId = new Guid("7b427f6a-a62a-44c5-948f-6d78f524cebe")
                         },
                         new
                         {
@@ -437,7 +437,7 @@ namespace RTS.Store.Web.Data.Migrations
                             Name = "Диван",
                             Price = 2000.00m,
                             QuantityInStock = 1m,
-                            SellerId = new Guid("3c11c7aa-d85a-462a-931e-adcc203d21f4")
+                            SellerId = new Guid("7b427f6a-a62a-44c5-948f-6d78f524cebe")
                         });
                 });
 
@@ -452,30 +452,28 @@ namespace RTS.Store.Web.Data.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UserId1")
+                    b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Sellers");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3c11c7aa-d85a-462a-931e-adcc203d21f4"),
+                            Id = new Guid("7b427f6a-a62a-44c5-948f-6d78f524cebe"),
                             PhoneNumber = "0899495555",
-                            UserId = new Guid("ddcb42c8-a394-45cd-82ae-b1e71d5c693e")
+                            UserId = "3c11c7aa-d85a-462a-931e-adcc203d21f4"
                         },
                         new
                         {
                             Id = new Guid("d111a3be-2961-4d6f-8a00-9fae1ecf9cd7"),
                             PhoneNumber = "0897556677",
-                            UserId = new Guid("ddcb42c8-a394-45cd-82ae-b1e71d5c693e")
+                            UserId = "ddcb42c8-a394-45cd-82ae-b1e71d5c693e"
                         });
                 });
 
@@ -596,8 +594,10 @@ namespace RTS.Store.Web.Data.Migrations
             modelBuilder.Entity("RTS.Store.Data.Models.Seller", b =>
                 {
                     b.HasOne("RTS.Store.Data.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId1");
+                        .WithMany("Sellers")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -622,6 +622,8 @@ namespace RTS.Store.Web.Data.Migrations
             modelBuilder.Entity("RTS.Store.Data.Models.ApplicationUser", b =>
                 {
                     b.Navigation("BuyProduct");
+
+                    b.Navigation("Sellers");
 
                     b.Navigation("ShopingCards");
                 });

@@ -42,7 +42,7 @@
         public string? BuyerId { get; set; }
 
         [ForeignKey("BuyerId")]
-        public ApplicationUser? Buyer { get; set; }
+        public virtual ApplicationUser? Buyer { get; set; }
 
         public Guid? ShopingCardId { get; set; }
 

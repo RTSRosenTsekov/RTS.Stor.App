@@ -30,5 +30,7 @@
 
         public  ICollection<Product> BuyProduct { get; set; }
 
+        public ICollection<Seller> Sellers { get; set; }
+
     }
 }

@@ -5,5 +5,6 @@
     public interface IProductService
     {
         Task<IEnumerable<AllProductViewModel>> AllProductAsync();
+        Task AddProductAsync(AddProductViewModel model , string sellerId);
     }
 }

@@ -6,6 +6,9 @@
     {
         Task<bool> RegisterUserAsync(RegisterViewModel model);
         Task<bool> LoginUserAsync(LoginViewModel model);
+        
+
+
 
     }
 }
