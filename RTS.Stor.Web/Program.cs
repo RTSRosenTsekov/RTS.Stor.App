@@ -3,6 +3,7 @@ namespace RTS.Store.Web
     using Microsoft.EntityFrameworkCore;
     using RTS.Store.Web.Data;
     using RTS.Store.Data.Models;
+    using RTS.Store.Web.Infrastricture;
     using RTS.Store.Web.Infrastricture.ModelBinders;
     using Microsoft.AspNetCore.Mvc;
     using RTS.Store.Web.Infrastricture.Extensions;

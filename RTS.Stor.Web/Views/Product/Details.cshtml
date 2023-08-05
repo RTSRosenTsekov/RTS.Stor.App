@@ -1,0 +1,52 @@
+﻿@model DetailsProductViewModel
+
+
+@{
+    ViewBag.Title = "House Details";
+}
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+<div class="container" style="display:inline">
+    <div class="row">
+        <div class="col-4">
+            <img class="card-img-top" style="width: 20rem;"
+                 src="@Model.ImageUrl" alt="House Image">
+        </div>
+        <div class="card col-8 border-0">
+            <p style="font-size:25px;"><u>@Model.Name</u></p>
+
+            <p>
+                Price Per Month:
+                <b>@($"{Model.Price:f2}") BGN</b>
+            </p>
+            <p>@Model.Description</p>
+            <p>Category: <b>@Model.CategoryName</b></p>
+
+            <div class="form-inline">
+                <!-- TO DO Chek users is seller or admin -->
+                <a class="btn btn-warning" asp-controller="Product" asp-action="Edit"
+                   asp-route-id="@Model.Id">Edit</a>
+                <a class="ml-2 btn btn-danger" asp-controller="Product" asp-action="Delete"
+                   asp-route-id="@Model.Id">Delete</a>
+
+                <form class="ml-2" asp-controller="House"
+                      asp-action="AddToCard" asp-route-id="@Model.Id"
+                      method="post">
+                    <input class="btn btn-primary" type="submit"
+                           value="AddToCard" />
+                </form>
+
+            </div>
+
+            <p></p>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Agent Info</h5>
+                    <p class="card-text">Full Name: @Model.Seller.FullName</p>
+                    <p class="card-text">Email: @Model.Seller.Email</p>
+                    <p class="card-text">Phone Number: @Model.Seller.PhoneNumber</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

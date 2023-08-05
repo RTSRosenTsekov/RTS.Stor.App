@@ -36,9 +36,12 @@
             // TO DO : Only Seller add product ;
             var userId = this.User.GetId()!;
             var sellerId = await this.sellerService.GetExistSellerId(userId);
+
             if (sellerId == null)
             {
-
+                // TO DO Error message
+                ModelState.AddModelError(string.Empty,"You must be seller to add product");
+                return this.RedirectToAction("All", "Product");
             }
             var allCategory = await this.categoryService.AllCategoryAsync();
 
@@ -90,6 +93,128 @@
            }
            
 
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            bool existProductId = await this.productService.ExistProductIdAsync(id);
+            if (!existProductId)
+            {
+                // TO do Error message "Product with the provided id dose not exist! "
+                return this.RedirectToAction("All","Product");
+            }
+
+            string userId=this.User.GetId()!;
+            bool isUserSeller = await this.sellerService.SellerExistByUserIdAsync(userId);
+
+            if (!isUserSeller)
+            {
+                return this.RedirectToAction("Become" , "Product");
+            }
+            string? sellerId = await this.sellerService.GetExistSellerId(userId);
+            bool isSellerOwnerProduct = await this.productService.IsSellerIdOwnerOfProductId(id, sellerId!);
+
+            if (!isSellerOwnerProduct)
+            {
+                // TO DO redirect to Mine Product and error message ""You must be seller owner of the product you want to edit!""
+                return this.RedirectToAction("All","Product");
+            }
+
+            EditProductViewModel model = await this.productService.GetEditProductAsync(id);
+            model.Categories = await this.categoryService.AllCategoryAsync();
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id, EditProductViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.Categories = await this.categoryService.AllCategoryAsync();
+                ModelState.AddModelError("editError" , "Input model invalid!");
+                return this.View(model);
+            }
+
+            try
+            {
+                await this.productService.EditProductByIdAsync(id, model);
+                return RedirectToAction("Details", "Product", new { id });
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("editError", "Unexepted error occurred while trying to update the product. Please try again later or conntact administrator!");
+                model.Categories= await this.categoryService.AllCategoryAsync();
+                return this.View(model);
+            }
+
+            
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Details(string id)
+        { 
+            bool existProduct = await this.productService.ExistProductIdAsync(id);
+            if (!existProduct)
+            {
+                // To do error message
+                return RedirectToAction("All", "Product");
+            }
+
+            DetailsProductViewModel model = await this.productService.GetDetailsProductAsync(id);
+
+            return this.View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(string id)
+        {
+            bool existProduct = await this.productService.ExistProductIdAsync(id);
+            if (!existProduct)
+            {
+                //to do error message
+                return RedirectToAction("All", "Product");
+            }
+
+            string userId = this.User.GetId()!;
+            bool isUserSeller = await this.sellerService.SellerExistByUserIdAsync(userId);
+
+            if (!isUserSeller)
+            {
+                return this.RedirectToAction("Become", "Product");
+            }
+            string? sellerId = await this.sellerService.GetExistSellerId(userId);
+            bool isSellerOwnerProduct = await this.productService.IsSellerIdOwnerOfProductId(id, sellerId!);
+
+            if (!isSellerOwnerProduct)
+            {
+                // TO DO redirect to Mine Product and error message ""You must be seller owner of the product you want to edit!""
+                return this.RedirectToAction("All", "Product");
+            }
+
+            DeleteProductViewModel model = await this.productService.GetProductForDeleteByIdAsync(id);
+
+            return this.View(model);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id, DeleteProductViewModel model)
+        {
+           
+
+            bool existProduct = await this.productService.ExistProductIdAsync(id);
+            if (!existProduct)
+            {
+                //to do error message
+                return RedirectToAction("All", "Product");
+            }
+
+            await this.productService.DeleteProductByIdAsync(id);
+
+            // TO DO return to mine page
+            return RedirectToAction("All", "Product");
         }
     }
 }
