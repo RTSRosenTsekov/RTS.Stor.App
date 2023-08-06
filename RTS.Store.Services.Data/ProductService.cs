@@ -44,7 +44,7 @@
 
         public async Task<IEnumerable<AllProductViewModel>> AllProductAsync()
         {
-            var model = await this.dbContext.Products.Select(p => new AllProductViewModel
+            var model = await this.dbContext.Products.Where(p=>p.IsActive).Select(p => new AllProductViewModel
             {
                 Id = p.Id.ToString(),
                 Name = p.Name,
@@ -115,7 +115,7 @@
                 { 
                     FullName= product.Seller.User.FirstName + " " + product.Seller.User.LastName,
                     Email = product.Seller.User.Email,
-                    PhoneNumber = product.Seller.User.PhoneNumber
+                    PhoneNumber = product.Seller.PhoneNumber
                 
                 }
 
@@ -160,6 +160,26 @@
             product.IsActive = false;
 
             await this.dbContext.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<MineAllProductViewModel>> GetMineSellerProductAsync(string sellerId)
+        {
+            IEnumerable<MineAllProductViewModel> allMineProduct = await this.dbContext.Products
+                .Where(p => p.SellerId.ToString() == sellerId)
+                .Select(p => new MineAllProductViewModel() 
+                { 
+                    Id=p.Id.ToString(),
+                    Name= p.Name,
+                    Description= p.Description,
+                    ImageUrl= p.ImageUrl,
+                    Price = p.Price,
+                    CreateOn = p.CreatedOn,
+                    IsActive = p.IsActive
+                
+                })
+                .ToListAsync();
+
+            return allMineProduct;
         }
     }
 }

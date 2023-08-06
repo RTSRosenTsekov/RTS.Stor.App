@@ -45,6 +45,7 @@ namespace RTS.Store.Web
                 .AddControllersWithViews()
                 .AddMvcOptions(options=>
                 {
+                    // Add script jquery-override.js to work decimalModelPinderProvider
                     options.ModelBinderProviders.Insert(0,new DecimalModelBinderProvider());
                     options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
                 });

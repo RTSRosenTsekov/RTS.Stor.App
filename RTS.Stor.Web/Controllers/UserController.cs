@@ -27,7 +27,7 @@
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError(string.Empty, "Something error!!!");
+                this.TempData["Error"]="Something error!!!";
                 return this.View(model);
             }
 
@@ -67,7 +67,7 @@
             var result = await this.userService.LoginUserAsync(model);
             if (!result)
             {
-                ModelState.AddModelError(string.Empty, "Login is faild!");
+                 this.TempData["Error"]="Login is faild!";
                 return this.View(model);
             }
 

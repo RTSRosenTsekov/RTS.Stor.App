@@ -1,6 +1,12 @@
 ﻿@model DetailsProductViewModel
+@using RTS.Store.Services.Data.Interfaces;
+@using RTS.Store.Web.Infrastricture.Extensions
 
-
+@inject ISellerService SellerService
+@{
+    var userId = this.User.GetId()!;
+    var isUserSeller = await this.SellerService.SellerExistByUserIdAsync(userId);
+}
 @{
     ViewBag.Title = "House Details";
 }
@@ -23,17 +29,21 @@
             <p>Category: <b>@Model.CategoryName</b></p>
 
             <div class="form-inline">
-                <!-- TO DO Chek users is seller or admin -->
-                <a class="btn btn-warning" asp-controller="Product" asp-action="Edit"
-                   asp-route-id="@Model.Id">Edit</a>
-                <a class="ml-2 btn btn-danger" asp-controller="Product" asp-action="Delete"
-                   asp-route-id="@Model.Id">Delete</a>
+                @if (isUserSeller)
+                {
+                    <a class="btn btn-warning" asp-controller="Product" asp-action="Edit"
+                       asp-route-id="@Model.Id">Edit</a>
+                    <a class="ml-2 btn btn-danger" asp-controller="Product" asp-action="Delete"
+                       asp-route-id="@Model.Id">Delete</a>
 
+                }
+                               
+               
                 <form class="ml-2" asp-controller="House"
                       asp-action="AddToCard" asp-route-id="@Model.Id"
                       method="post">
                     <input class="btn btn-primary" type="submit"
-                           value="AddToCard" />
+                           value="Add To Card" />
                 </form>
 
             </div>

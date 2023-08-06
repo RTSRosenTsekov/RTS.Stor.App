@@ -25,8 +25,7 @@
 
             if (sellerId != null)
             {
-                // TO DO - Make error pages
-                this.TempData["ErrorMessage"] = "You are already an agent!";
+                this.TempData["Error"] = "You are already an seller!";
                 return RedirectToAction("All", "Product");
             }
             return View();
@@ -41,9 +40,8 @@
             bool isPhoneNumberTaken = await this.sellerService.SellerExistByPhoneNumberAsync(model.PhoneNumber);
             if (sellerId!= null || isPhoneNumberTaken==true)
             {
-                // TO DO - Make error pages
-                this.TempData["ErrorMessage"] = "You are already an seller or phone number is exist on anather seller";
-                return RedirectToAction("All", "Product");
+                this.TempData["Error"] = "You are already an seller or phone number is exist on anather seller";
+                return this.View(model);
             }
 
             if (!ModelState.IsValid)
@@ -54,11 +52,12 @@
             try
             {
                 await this.sellerService.CreateSellerAsync(model, userId);
+                this.TempData["Succes"] = "You are seller!";
                 return this.RedirectToAction("All", "Product");
             }
             catch (Exception)
             {
-                ModelState.AddModelError(string.Empty, "Unexpected error occurred while registering you as an agent! Please try again later or contacted administrator.");
+                this.TempData["Error"]="Unexpected error occurred while registering you as an agent! Please try again later or contacted administrator.";
                 return this.RedirectToAction("All", "Product");
             }
            

@@ -18,11 +18,16 @@
                 <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Add">Add Product</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Mine">Mine Product</a>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Seller" asp-action="Become">Becom Seller</a>
             </li>
-
         }
-    <li class="nav-item">
+        <li class="nav-item">
         <a  class="nav-link text-dark" >Hello @User.Identity?.Name!</a>
     </li>
     <li class="nav-item">

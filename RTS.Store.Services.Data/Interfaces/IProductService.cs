@@ -14,5 +14,6 @@
         Task EditProductByIdAsync (string productId, EditProductViewModel model);
         Task<DeleteProductViewModel> GetProductForDeleteByIdAsync(string productId);
         Task DeleteProductByIdAsync(string productId);
+        Task<IEnumerable<MineAllProductViewModel>> GetMineSellerProductAsync(string sellerId);
     }
 }
