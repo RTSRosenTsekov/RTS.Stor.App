@@ -35,7 +35,7 @@
 
         public virtual Category Category { get; set; } = null!;
 
-        public Guid SellerId { get; set; }
+        public Guid SellerId { get; set; } 
 
         public Seller Seller { get; set; } = null!;
 

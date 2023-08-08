@@ -8,6 +8,7 @@ namespace RTS.Store.Web
     using Microsoft.AspNetCore.Mvc;
     using RTS.Store.Web.Infrastricture.Extensions;
     using RTS.Store.Services.Data.Interfaces;
+    using Microsoft.AspNetCore.Identity;
 
     public class Program
     {
@@ -37,6 +38,7 @@ namespace RTS.Store.Web
 
 
             })
+              .AddRoles<IdentityRole>()
               .AddEntityFrameworkStores<StoreDbContext>();
 
             builder.Services.AddApplicationServices(typeof(IProductService));
@@ -73,6 +75,7 @@ namespace RTS.Store.Web
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.SeedAdministrator();
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");

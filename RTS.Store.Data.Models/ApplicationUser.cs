@@ -10,6 +10,7 @@
            // this.Id = Guid.NewGuid();
             this.ShopingCards = new HashSet<ShopingCard>();
             this.BuyProduct = new HashSet<Product>();
+            this.Sellers = new HashSet<Seller>();
         }
 
         [Required]

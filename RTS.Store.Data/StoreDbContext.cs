@@ -175,7 +175,7 @@
                 //CreatedOn = DateTime.Now,
                 IsActive = true,
                 CategoryId = 1,
-                SellerId = Guid.Parse("d111a3be-2961-4d6f-8a00-9fae1ecf9cd7"),
+                SellerId = Guid.Parse("d111a3be-2961-4d6f-8a00-9fae1ecf9cd7")
             };
        
             products.Add(product);
