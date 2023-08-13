@@ -25,6 +25,7 @@
     <ProjectReference Include="..\RTS.Store.Common\RTS.Store.Common.csproj" />
     <ProjectReference Include="..\RTS.Store.Data.Models\RTS.Store.Data.Models.csproj" />
     <ProjectReference Include="..\RTS.Store.Data\RTS.Store.Data.csproj" />
+    <ProjectReference Include="..\RTS.Store.Service.Data.Models\RTS.Store.Service.Data.Models.csproj" />
     <ProjectReference Include="..\RTS.Store.Services.Data\RTS.Store.Services.Data.csproj" />
     <ProjectReference Include="..\RTS.Store.Web.Infrastricture\RTS.Store.Web.Infrastricture.csproj" />
     <ProjectReference Include="..\RTS.Store.Web.ViewModel\RTS.Store.Web.ViewModel.csproj" />

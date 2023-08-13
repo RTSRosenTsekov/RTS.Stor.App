@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RTS.Store.Data\RTS.Store.Data.csproj" />
+    <ProjectReference Include="..\RTS.Store.Service.Data.Models\RTS.Store.Service.Data.Models.csproj" />
     <ProjectReference Include="..\RTS.Store.Web.ViewModel\RTS.Store.Web.ViewModel.csproj" />
   </ItemGroup>
 

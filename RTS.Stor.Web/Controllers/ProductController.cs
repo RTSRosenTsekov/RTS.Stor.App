@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using RTS.Store.Common;
+    using RTS.Store.Service.Data.Models.Product;
     using RTS.Store.Services.Data.Interfaces;
     using RTS.Store.Web.Infrastricture.Extensions;
     using RTS.Store.Web.ViewModel.Product;
@@ -14,21 +15,27 @@
         private readonly ICategoryService categoryService;
         private readonly ISellerService sellerService;
         private readonly IUserService userService;
-
+        private const int PageSize = 25;
         public ProductController(IProductService productService, ICategoryService categoryService, IUserService userService, ISellerService sellerService)
         {
             this.productService = productService;
             this.categoryService = categoryService;
             this.userService = userService;
             this.sellerService = sellerService;
-        }
+            
+    }
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All([FromQuery] AllProductQueryModel queryModel , int page = 1)
         {
-            var result = await this.productService.AllProductAsync();
-            return View(result);
+            AllProductFilteredAndPagedServiceModel serviceModel = await this.productService.AllProductAsync(page,  queryModel);
+             
+
+            queryModel.AllProducts = serviceModel.Products;
+            queryModel.Categories = await this.categoryService.AllCategoryAsync();
+           
+            return View(queryModel);
         }
 
         [HttpGet]
@@ -219,7 +226,7 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> Mine()
+        public async Task<IActionResult> Mine( [FromQuery] MineAllProductQueryModel queryModel , int page=1)
         {
             string userId = this.User.GetId()!;
             bool isUserSeller = await this.sellerService.SellerExistByUserIdAsync(userId);
@@ -230,8 +237,12 @@
             }
 
             string? sellerId = await this.sellerService.GetExistSellerId(userId);
-            IEnumerable<MineAllProductViewModel> model = await this.productService.GetMineSellerProductAsync(sellerId!);
-            return this.View(model);
+
+            MineAllProductFilteredAndPageServiceModel mineQueryModel = await this.productService.GetMineSellerProductAsync(queryModel ,sellerId! , page);
+            queryModel.AllProducts = mineQueryModel.MineAllProducts;
+            queryModel.Categories = await this.categoryService.AllCategoryAsync();
+            
+            return this.View(queryModel);
         }
     }
 }

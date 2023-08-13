@@ -2,11 +2,14 @@
 {
     using Microsoft.EntityFrameworkCore;
     using RTS.Store.Data.Models;
+    using RTS.Store.Service.Data.Models.Product;
     using RTS.Store.Services.Data.Interfaces;
     using RTS.Store.Web.Data;
     using RTS.Store.Web.ViewModel.Product;
+    using RTS.Store.Web.ViewModel.Product.Enums;
     using RTS.Store.Web.ViewModel.Seller;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     public class ProductService : IProductService
@@ -42,9 +45,43 @@
 
         }
 
-        public async Task<IEnumerable<AllProductViewModel>> AllProductAsync()
+        public async Task<AllProductFilteredAndPagedServiceModel> AllProductAsync(int page ,  AllProductQueryModel queryModel)
         {
-            var model = await this.dbContext.Products.Where(p=>p.IsActive).Select(p => new AllProductViewModel
+            IQueryable<Product> productQuery = this.dbContext.Products.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(queryModel.Category))
+            {
+                productQuery = productQuery.Where(p => p.Category.Name == queryModel.Category);
+            }
+
+            if (!string.IsNullOrWhiteSpace(queryModel.SearchTerm))
+            {
+                string wildCard = $"%{queryModel.SearchTerm}%";
+
+                productQuery = productQuery.Where(p=> EF.Functions.Like(p.Name,wildCard));
+            }
+
+            productQuery = queryModel.ProductSorting switch
+            {
+                ProductSorting.Newest => productQuery.OrderByDescending(p=>p.CreatedOn),
+                ProductSorting.Oldest => productQuery.OrderBy(p=>p.CreatedOn),
+                ProductSorting.PriceAscending => productQuery.OrderBy(p=>p.Price),
+                ProductSorting.PriceDescending => productQuery.OrderByDescending(p=>p.Price),
+                _=> productQuery.OrderBy(p=> p.BuyerId != null).ThenByDescending(p=>p.CreatedOn)
+                
+
+            };
+
+            queryModel.CurrentPage = page;
+            var allTotalProduct = await this.dbContext.Products.Where(p => p.IsActive).CountAsync();
+            queryModel.TotalPage = (int)Math.Ceiling(allTotalProduct/ (double)queryModel.ProductPerPage);
+
+            
+
+            IEnumerable<AllProductViewModel> model = await productQuery.Where(p=>p.IsActive)
+                .Skip((page - 1) * queryModel.ProductPerPage)
+                .Take(queryModel.ProductPerPage)
+                .Select(p => new AllProductViewModel
             {
                 Id = p.Id.ToString(),
                 Name = p.Name,
@@ -54,7 +91,11 @@
                 CreateOn = p.CreatedOn
             }).ToArrayAsync();
 
-            return model;
+            AllProductFilteredAndPagedServiceModel result = new AllProductFilteredAndPagedServiceModel()
+            {
+                Products = model
+            };
+            return result;
         }
 
         public async Task<EditProductViewModel> GetEditProductAsync(string productId)
@@ -158,14 +199,50 @@
             Product product = await this.dbContext.Products.Where(p => p.IsActive).FirstAsync(p => p.Id.ToString() == productId);
 
             product.IsActive = false;
+            product.CreatedOn = DateTime.Now;
 
             await this.dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<MineAllProductViewModel>> GetMineSellerProductAsync(string sellerId)
+        public async Task<MineAllProductFilteredAndPageServiceModel> GetMineSellerProductAsync(MineAllProductQueryModel queryModel ,string sellerId , int page)
         {
-            IEnumerable<MineAllProductViewModel> allMineProduct = await this.dbContext.Products
+            IQueryable<Product> productQuery = this.dbContext.Products.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(queryModel.Category))
+            {
+                productQuery = productQuery.Where(p => p.Category.Name == queryModel.Category);
+            }
+
+            if (!string.IsNullOrWhiteSpace(queryModel.SearchTerm))
+            {
+                string wildCard = $"%{queryModel.SearchTerm}%";
+
+                productQuery = productQuery.Where(p => EF.Functions.Like(p.Name, wildCard));
+            }
+
+            productQuery = queryModel.ProductSorting switch
+            {
+                ProductSorting.Newest => productQuery.OrderByDescending(p => p.CreatedOn),
+                ProductSorting.Oldest => productQuery.OrderBy(p => p.CreatedOn),
+                ProductSorting.PriceAscending => productQuery.OrderBy(p => p.Price),
+                ProductSorting.PriceDescending => productQuery.OrderByDescending(p => p.Price),
+                ProductSorting.NoActive=> productQuery.OrderByDescending(p=>p.CreatedOn),
+                _ => productQuery.OrderBy(p => p.BuyerId != null).ThenByDescending(p => p.CreatedOn)
+
+
+            };
+
+            var isActiv = queryModel.ProductSorting.ToString() == "NoActive" ? false : true;
+            queryModel.CurrentPage = page;
+            var a = queryModel.ProductSorting.ToString();
+            var allTotalProduct = await this.dbContext.Products.Where(p=>p.SellerId.ToString()== sellerId).Where(p => p.IsActive == isActiv).CountAsync();
+            queryModel.TotalPage = (int)Math.Ceiling(allTotalProduct / (double)queryModel.ProductPerPage);
+
+            IEnumerable<MineAllProductViewModel> allMineProduct = await productQuery
                 .Where(p => p.SellerId.ToString() == sellerId)
+                .Where(p=>p.IsActive == isActiv)
+                .Skip((page - 1) * queryModel.ProductPerPage)
+                .Take(queryModel.ProductPerPage)
                 .Select(p => new MineAllProductViewModel() 
                 { 
                     Id=p.Id.ToString(),
@@ -179,7 +256,14 @@
                 })
                 .ToListAsync();
 
-            return allMineProduct;
+            MineAllProductFilteredAndPageServiceModel model = new MineAllProductFilteredAndPageServiceModel()
+            {
+                MineAllProducts = allMineProduct
+            };
+
+            return model;
         }
+
+        
     }
 }
