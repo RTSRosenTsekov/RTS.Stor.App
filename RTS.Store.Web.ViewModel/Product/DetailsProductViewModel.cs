@@ -9,6 +9,8 @@
         [Display(Name = "Quantity in stock")]
         public decimal? QuantityInStock { get; set; }
 
+        public decimal? Quantity { get; set; }
+
         public DateTime CreatedOn { get; set; }
 
         public bool IsActive { get; set; }

@@ -4,7 +4,7 @@
     using Microsoft.EntityFrameworkCore;
     using RTS.Store.Data.Models;
     using Microsoft.AspNetCore.Identity;
-    using System.Reflection;
+   
 
     public class StoreDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -23,6 +23,10 @@
         public DbSet<ShopingCard> ShopingCards { get; set; } = null!;
 
         public DbSet<Payment> Payments { get; set; } = null!;
+
+        public DbSet<Order> Orders { get; set; } = null!;
+
+        public DbSet<ProductOrder> ProductOrders { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -70,6 +74,34 @@
                 .WithMany(p => p.ShopingCards)
                 .HasForeignKey(p => p.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<ShopingCard>()
+                .HasMany(o=>o.Order)
+                .WithOne(o=>o.ShopingCard)
+                .HasForeignKey(o=>o.ShopingCardId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<ProductOrder>()
+                .HasKey(po => new { po.ProductId, po.OrderId });
+
+            builder.Entity<ProductOrder>()
+                .HasOne(o => o.Product)
+                .WithMany(po=>po.ProductOrders)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasForeignKey(o => o.ProductId);
+
+
+            builder.Entity<ProductOrder>()
+                .HasOne(p => p.Order)
+                .WithMany(po => po.ProductOrders)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasForeignKey(o => o.OrderId);
+
+           ///builder.Entity<ProductOrder>()
+           //    .HasOne(p => p.Order)
+           //    .WithMany(po => po.ProductOrders)
+           //    .OnDelete(DeleteBehavior.Restrict)
+           //    .HasForeignKey(o => o.OrderId);
 
             builder.Entity<ApplicationUser>().HasData(this.GenerateUser());
             builder.Entity<Seller>().HasData(this.GenerateSeller());

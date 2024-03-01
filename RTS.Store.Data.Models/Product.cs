@@ -44,9 +44,11 @@
         [ForeignKey("BuyerId")]
         public virtual ApplicationUser? Buyer { get; set; }
 
-        public Guid? ShopingCardId { get; set; }
+        public virtual ICollection<ProductOrder> ProductOrders { get; set; } = new HashSet<ProductOrder>();  
 
-        public ShopingCard? ShopingCard { get; set; }
+        //public Guid? ShopingCardId { get; set; }
+        //
+        //public ShopingCard? ShopingCard { get; set; }
 
 
 

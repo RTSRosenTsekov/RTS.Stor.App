@@ -7,15 +7,11 @@
 
         [Key]
         public Guid Id { get; set; }
-
-        public decimal? OrderTotal { get; set; }
-
+          
         [Required]
         public string ShipingAddress { get; set; } = null!;
-
-        public string? Status { get; set; }
-
-        public virtual ICollection<Product> Products { get; set; }=new HashSet<Product>();
+                
+        public virtual ICollection<Order> Order { get; set; }=new HashSet<Order>();
 
         public string? UserId { get; set; }
 

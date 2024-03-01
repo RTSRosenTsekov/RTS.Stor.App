@@ -1,7 +1,8 @@
-﻿namespace RTS.Store.Services.Data
+﻿using RTS.Store.Services.Data.Interfaces;
+
+namespace RTS.Store.Services.Data
 {
     using Microsoft.EntityFrameworkCore;
-    using RTS.Store.Services.Data.Interfaces;
     using RTS.Store.Web.Data;
     using RTS.Store.Web.ViewModel.Category;
 
@@ -15,7 +16,7 @@
         }
         public async Task<IEnumerable<AllCategoryViewModel>> AllCategoryAsync()
         {
-            var allCategory = await this.dbContext.Categories.Select(c => new AllCategoryViewModel
+            var allCategory = await dbContext.Categories.Select(c => new AllCategoryViewModel
             {
                 Id = c.Id,
                 Name = c.Name,

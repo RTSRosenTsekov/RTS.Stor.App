@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RTS.Store.Web.Data;
 
@@ -11,9 +12,10 @@ using RTS.Store.Web.Data;
 namespace RTS.Store.Web.Data.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240128211706_AddPOtable")]
+    partial class AddPOtable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -246,15 +248,15 @@ namespace RTS.Store.Web.Data.Migrations
                         {
                             Id = "ddcb42c8-a394-45cd-82ae-b1e71d5c693e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "75f22bc6-1a23-49e7-82ac-48e0261eba71",
+                            ConcurrencyStamp = "7205df59-2fc7-4f85-98b3-0df56e213bb2",
                             Email = "rosenSeller@abv.bg",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ROSENSELLER@ABV.BG",
                             NormalizedUserName = "ROSENSELLER@ABV.BG",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFNGvX1MQ/9uICaTZtNfSjosn34Lmq7b209QAkoD1cZ8MEgInvTrZvCEcL3w/nMYig==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPQLf1lR/4odvbZm1Q4Z8/VZv4rjCsy9HvRlcX3rdaG7glxaYa2bPbL4g4n8gO/70Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ce7b5628-21a8-4cd7-8b15-dfce9b37cdb2",
+                            SecurityStamp = "8925c8b8-2d38-4c3f-b7c4-4a2f5f716047",
                             TwoFactorEnabled = false,
                             UserName = "rosenSeller@abv.bg"
                         },
@@ -262,15 +264,15 @@ namespace RTS.Store.Web.Data.Migrations
                         {
                             Id = "3c11c7aa-d85a-462a-931e-adcc203d21f4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "24e5fc5a-5990-4175-b28c-fef31fc5e59a",
+                            ConcurrencyStamp = "55dcdaaa-3c86-4651-94ca-c14e2feba023",
                             Email = "yavorSeller@abv.bg",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "YAVORSELLER@ABV.BG",
                             NormalizedUserName = "YAVORSELLER@ABV.BG",
-                            PasswordHash = "AQAAAAEAACcQAAAAEO87NoQmOKkWknb2aU9AQWtQmc50SFafAz7uzdsYmkpZonqNyCFJbhfBGYD/wOrs+A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIhqwMn92m6lpmGV2S6DPb5YAqx3JnSncFuJVeGTn7E6BtUB8jArissAmTLIIhdL3Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "34a88617-ca0a-4501-9fc8-0d6226b5a6c5",
+                            SecurityStamp = "13843f39-67a2-451f-868e-d83c911067a3",
                             TwoFactorEnabled = false,
                             UserName = "yavorSeller@abv.bg"
                         });
